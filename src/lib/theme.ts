@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react'
+import { flushSync } from 'react-dom'
 
 const KEY = 'dominio-theme'
 
@@ -34,27 +35,53 @@ systemDark.addEventListener('change', (event) => {
   emit()
 })
 
-let fadeTimer: ReturnType<typeof setTimeout> | undefined
+type Point = { x: number; y: number }
 
-// While this class is on, index.css blends the colors instead of switching them at once.
-function fadeColors() {
-  const root = document.documentElement
-  root.classList.add('theme-fade')
-  clearTimeout(fadeTimer)
-  fadeTimer = setTimeout(() => root.classList.remove('theme-fade'), 400)
-}
-
-function toggle() {
-  theme = theme === 'dark' ? 'light' : 'dark'
-  stored = theme
-  fadeColors()
+function change(next: Theme) {
+  theme = next
+  stored = next
   apply()
   try {
-    localStorage.setItem(KEY, theme)
+    localStorage.setItem(KEY, next)
   } catch {
     // Ignore: the theme still changes, it just is not remembered.
   }
   emit()
+}
+
+// The new theme is revealed as a circle growing from the toggle button. Every part of the
+// screen is either fully the old theme or fully the new one, so it never turns to gray mush.
+// Without support for view transitions, or with "reduce motion", the theme just switches.
+function toggle(origin?: Point) {
+  const next: Theme = theme === 'dark' ? 'light' : 'dark'
+  const canAnimate =
+    origin !== undefined &&
+    'startViewTransition' in document &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (!canAnimate) {
+    change(next)
+    return
+  }
+
+  const radius = Math.hypot(
+    Math.max(origin.x, window.innerWidth - origin.x),
+    Math.max(origin.y, window.innerHeight - origin.y),
+  )
+  // flushSync makes React update the button before the browser takes the "after" picture.
+  const transition = document.startViewTransition(() => flushSync(() => change(next)))
+  transition.ready
+    .then(() =>
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${origin.x}px ${origin.y}px)`,
+            `circle(${radius}px at ${origin.x}px ${origin.y}px)`,
+          ],
+        },
+        { duration: 500, easing: 'ease-in-out', fill: 'forwards', pseudoElement: '::view-transition-new(root)' },
+      ),
+    )
+    .catch(() => {})
 }
 
 function subscribe(listener: () => void) {

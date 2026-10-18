@@ -120,18 +120,18 @@
   animation: soft-highlight 2.2s ease-out 0.2s both;
 }
 
-/* Briefly applied by the theme toggle so colors blend instead of flipping. */
-@media (prefers-reduced-motion: no-preference) {
-  .theme-fade,
-  .theme-fade *,
-  .theme-fade *::before,
-  .theme-fade *::after {
-    transition:
-      background-color 300ms ease,
-      border-color 300ms ease,
-      color 300ms ease,
-      fill 300ms ease,
-      stroke 300ms ease,
-      box-shadow 300ms ease !important;
-  }
+/* Theme switch: the new page is drawn over the old one and revealed by a growing circle
+   (the circle itself is animated from src/lib/theme.ts). No cross-fade. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
 }
