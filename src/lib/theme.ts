@@ -78,7 +78,7 @@ function toggle(origin?: Point) {
             `circle(${radius}px at ${origin.x}px ${origin.y}px)`,
           ],
         },
-        { duration: 500, easing: 'ease-in-out', fill: 'forwards', pseudoElement: '::view-transition-new(root)' },
+        { duration: 700, easing: 'ease-in-out', fill: 'forwards', pseudoElement: '::view-transition-new(root)' },
       ),
     )
     .catch(() => {})
