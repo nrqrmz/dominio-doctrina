@@ -56,7 +56,7 @@ export default function HomePage() {
               to={`/practice/${passage.id}`}
               ref={passage.id === justLearnedId ? justLearnedRef : undefined}
               className={cn(
-                'flex min-h-16 items-center gap-3 rounded-xl border bg-card p-4 transition-colors outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50',
+                'flex min-h-16 items-center gap-3 rounded-xl border bg-card p-4 transition-[color,background-color,transform] outline-none hover:bg-accent active:scale-[0.985] focus-visible:ring-[3px] focus-visible:ring-ring/50',
                 passage.id === justLearnedId && 'animate-soft-highlight',
               )}
             >
