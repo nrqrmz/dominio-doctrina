@@ -81,12 +81,15 @@ export default function PracticePage() {
               aria-current={index + 1 === step}
               className="flex h-6 flex-1 items-center outline-none"
             >
-              <span
-                className={cn(
-                  'h-1.5 w-full rounded-full transition-colors',
-                  index + 1 <= step ? 'bg-primary' : 'bg-muted',
-                )}
-              />
+              <span className="block h-1.5 w-full overflow-hidden rounded-full bg-muted">
+                {/* The fill grows from the left when the step is reached. */}
+                <span
+                  className={cn(
+                    'block h-full w-full origin-left rounded-full bg-primary transition-transform duration-500 ease-out',
+                    index + 1 <= step ? 'scale-x-100' : 'scale-x-0',
+                  )}
+                />
+              </span>
             </button>
           ))}
         </div>
