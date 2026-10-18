@@ -119,3 +119,19 @@
 .animate-soft-highlight {
   animation: soft-highlight 2.2s ease-out 0.2s both;
 }
+
+/* Briefly applied by the theme toggle so colors blend instead of flipping. */
+@media (prefers-reduced-motion: no-preference) {
+  .theme-fade,
+  .theme-fade *,
+  .theme-fade *::before,
+  .theme-fade *::after {
+    transition:
+      background-color 300ms ease,
+      border-color 300ms ease,
+      color 300ms ease,
+      fill 300ms ease,
+      stroke 300ms ease,
+      box-shadow 300ms ease !important;
+  }
+}

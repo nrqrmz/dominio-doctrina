@@ -34,9 +34,20 @@ systemDark.addEventListener('change', (event) => {
   emit()
 })
 
+let fadeTimer: ReturnType<typeof setTimeout> | undefined
+
+// While this class is on, index.css blends the colors instead of switching them at once.
+function fadeColors() {
+  const root = document.documentElement
+  root.classList.add('theme-fade')
+  clearTimeout(fadeTimer)
+  fadeTimer = setTimeout(() => root.classList.remove('theme-fade'), 400)
+}
+
 function toggle() {
   theme = theme === 'dark' ? 'light' : 'dark'
   stored = theme
+  fadeColors()
   apply()
   try {
     localStorage.setItem(KEY, theme)
