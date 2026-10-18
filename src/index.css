@@ -5,6 +5,7 @@
 
 :root {
   --radius: 0.625rem;
+  color-scheme: light;
   /* Palette: light sky blue with soft gold. Text colors keep at least 4.5:1 contrast. */
   --background: #F4F8FC;
   --foreground: #1B2A3B;
@@ -29,24 +30,28 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  color-scheme: dark;
+  /* Night palette: warm charcoal with the same sky blue as the day theme, lightened. Text keeps at least 4.5:1 contrast. */
+  --background: #151311;
+  --foreground: #EDE8DC;
+  --card: #1F1D19;
+  --card-foreground: #EDE8DC;
+  --popover: #1F1D19;
+  --popover-foreground: #EDE8DC;
+  --primary: #7DB3E8;
+  --primary-foreground: #0B1626;
+  --secondary: #2B2823;
+  --secondary-foreground: #E8E2D2;
+  --muted: #24221E;
+  --muted-foreground: #A9A395;
+  --accent: #2A2F38;
+  --accent-foreground: #DCE9F7;
+  --destructive: #C23B30;
+  --border: #38342C;
+  --input: #403B32;
+  --ring: #7DB3E8;
+  --success: #6CC49A;
+  --gold: #C9AA5C;
 }
 
 @theme inline {

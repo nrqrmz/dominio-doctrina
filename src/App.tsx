@@ -2,6 +2,7 @@ import { Link, Outlet, Route, Routes } from 'react-router-dom'
 import { CheckCircle2 } from 'lucide-react'
 
 import FontSizeControls from '@/components/font-size-controls'
+import ThemeToggle from '@/components/theme-toggle'
 import { passages } from '@/data/passages'
 import { useLearned } from '@/lib/progress'
 import HomePage from '@/pages/HomePage'
@@ -22,6 +23,7 @@ function Layout() {
           </Link>
           <div className="flex shrink-0 items-center gap-[4px]">
             <FontSizeControls />
+            <ThemeToggle />
             <span
               className="flex items-center gap-[4px] text-[14px] font-medium text-muted-foreground"
               aria-label={`${learned.size} de ${passages.length} pasajes aprendidos`}
