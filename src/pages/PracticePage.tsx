@@ -9,6 +9,13 @@ import { maskText, STEP_COUNT, STEP_LABELS } from '@/lib/skeleton'
 import { cn } from '@/lib/utils'
 import NotFoundPage from '@/pages/NotFoundPage'
 
+// The bottom bar uses px sizes so it keeps fitting at any text size setting. The arrows
+// are hidden on very narrow phones to leave the room to the labels.
+const BAR_BUTTON =
+  'h-[48px] min-w-0 flex-1 gap-[6px] px-[6px] text-[14px] sm:gap-[8px] sm:px-[16px] sm:text-[16px]'
+const ICON = 'size-[16px]'
+const ARROW_ICON = 'hidden size-[16px] min-[360px]:block'
+
 export default function PracticePage() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -96,31 +103,31 @@ export default function PracticePage() {
       )}
 
       <div className="fixed inset-x-0 bottom-0 z-10 border-t bg-background">
-        <div className="mx-auto flex max-w-2xl gap-2 px-4 pt-[12px] pb-[max(12px,env(safe-area-inset-bottom))]">
+        <div className="mx-auto flex max-w-2xl gap-[8px] px-[16px] pt-[12px] pb-[max(12px,env(safe-area-inset-bottom))]">
           <Button
             variant="outline"
-            className="h-[48px] min-w-0 flex-1 px-2 text-[14px] sm:px-4 sm:text-[16px]"
+            className={BAR_BUTTON}
             disabled={step === 1}
             onClick={() => goTo(step - 1)}
           >
-            <ChevronLeft /> Atrás
+            <ChevronLeft className={ARROW_ICON} /> Atrás
           </Button>
           {step > 1 && (
             <Button
               variant="secondary"
-              className="h-[48px] min-w-0 flex-1 px-2 text-[14px] sm:px-4 sm:text-[16px]"
+              className={BAR_BUTTON}
               onClick={() => setPeek((value) => !value)}
             >
-              {peek ? <EyeOff /> : <Eye />} {peek ? 'Ocultar' : 'Revisar'}
+              {peek ? <EyeOff className={ICON} /> : <Eye className={ICON} />} {peek ? 'Ocultar' : 'Revisar'}
             </Button>
           )}
           {isLast ? (
-            <Button className="h-[48px] min-w-0 flex-1 px-2 text-[14px] sm:px-4 sm:text-[16px]" onClick={finish}>
-              <Check /> Lo sé
+            <Button className={BAR_BUTTON} onClick={finish}>
+              <Check className={ICON} /> Lo sé
             </Button>
           ) : (
-            <Button className="h-[48px] min-w-0 flex-1 px-2 text-[14px] sm:px-4 sm:text-[16px]" onClick={() => goTo(step + 1)}>
-              Siguiente <ChevronRight />
+            <Button className={BAR_BUTTON} onClick={() => goTo(step + 1)}>
+              Siguiente <ChevronRight className={ARROW_ICON} />
             </Button>
           )}
         </div>

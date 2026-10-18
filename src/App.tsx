@@ -15,15 +15,15 @@ function Layout() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-20 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
         {/* px sizes on purpose: the bar must not grow with the font size setting. */}
-        <div className="mx-auto flex h-[56px] max-w-2xl items-center justify-between gap-2 px-4">
+        <div className="mx-auto flex h-[56px] max-w-2xl items-center justify-between gap-[8px] px-[16px]">
           <Link to="/" className="min-w-0 truncate text-[16px] font-semibold">
             <span className="min-[380px]:hidden">Dominio</span>
             <span className="hidden min-[380px]:inline">Dominio de la Doctrina</span>
           </Link>
-          <div className="flex shrink-0 items-center gap-1">
+          <div className="flex shrink-0 items-center gap-[4px]">
             <FontSizeControls />
             <span
-              className="flex items-center gap-1 text-[14px] font-medium text-muted-foreground"
+              className="flex items-center gap-[4px] text-[14px] font-medium text-muted-foreground"
               aria-label={`${learned.size} de ${passages.length} pasajes aprendidos`}
             >
               <CheckCircle2 className="hidden size-[16px] text-green-600 sm:block" aria-hidden />
