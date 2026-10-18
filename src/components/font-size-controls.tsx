@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import { useFontSize } from '@/lib/font-size'
 
 // Fixed px sizes: the controls must not grow with the text they resize.
-const buttonClass = 'size-[36px] text-[14px] font-semibold'
+const buttonClass = 'size-[36px] px-0 text-[14px] font-semibold'
 
 export default function FontSizeControls() {
   const { canDecrease, canIncrease, decrease, increase } = useFontSize()
