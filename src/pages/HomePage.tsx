@@ -1,12 +1,30 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { CheckCircle2, ChevronRight } from 'lucide-react'
+import { CheckCircle2, ChevronRight, RotateCcw } from 'lucide-react'
 
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { passages } from '@/data/passages'
-import { getLearned } from '@/lib/progress'
+import { clearLearned, getLearned } from '@/lib/progress'
 
 export default function HomePage() {
-  const [learned] = useState(getLearned)
+  const [learned, setLearnedIds] = useState(getLearned)
+  const [confirmOpen, setConfirmOpen] = useState(false)
+
+  const resetProgress = () => {
+    clearLearned()
+    setLearnedIds(new Set())
+    setConfirmOpen(false)
+  }
 
   return (
     <div className="space-y-6">
@@ -38,6 +56,33 @@ export default function HomePage() {
           </li>
         ))}
       </ul>
+
+      {learned.size > 0 && (
+        <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline" className="h-12 w-full text-base">
+              <RotateCcw /> Reiniciar aprendidos
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>¿Reiniciar tu progreso?</DialogTitle>
+              <DialogDescription>
+                Se quitarán las marcas de los {learned.size} pasajes aprendidos. Esto no se puede
+                deshacer.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cancelar</Button>
+              </DialogClose>
+              <Button variant="destructive" onClick={resetProgress}>
+                Sí, reiniciar
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   )
 }

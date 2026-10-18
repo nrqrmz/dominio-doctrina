@@ -11,6 +11,14 @@ export function getLearned(): Set<string> {
   }
 }
 
+export function clearLearned() {
+  try {
+    localStorage.removeItem(KEY)
+  } catch {
+    // Ignore: progress is a convenience, not required.
+  }
+}
+
 export function setLearned(id: string, learned: boolean) {
   try {
     const ids = getLearned()
