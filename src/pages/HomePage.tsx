@@ -1,35 +1,43 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { CheckCircle2, ChevronRight } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-
-// Example data. Replace with real data from Supabase.
-const items = [1, 2, 3]
+import { passages } from '@/data/passages'
+import { getLearned } from '@/lib/progress'
 
 export default function HomePage() {
+  const [learned] = useState(getLearned)
+
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">Welcome</h1>
+      <div className="space-y-1">
+        <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Old Testament</h1>
         <p className="text-muted-foreground">
-          This is an example page. Ask Claude Code to replace it with your own app.
+          Pick a passage to practice. {learned.size} of {passages.length} learned.
         </p>
       </div>
-      <div className="grid gap-4 sm:grid-cols-3">
-        {items.map((id) => (
-          <Card key={id}>
-            <CardHeader>
-              <CardTitle>Item {id}</CardTitle>
-              <CardDescription>Example of a dynamic route.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button asChild variant="outline" size="sm">
-                <Link to={`/items/${id}`}>Open</Link>
-              </Button>
-            </CardContent>
-          </Card>
+
+      <ul className="grid gap-3 md:grid-cols-2">
+        {passages.map((passage) => (
+          <li key={passage.id}>
+            <Link
+              to={`/practice/${passage.id}`}
+              className="flex min-h-16 items-center gap-3 rounded-xl border bg-card p-4 transition-colors outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50"
+            >
+              <div className="min-w-0 flex-1">
+                <p className="font-semibold">{passage.reference}</p>
+                <p lang="es" className="mt-0.5 text-sm text-muted-foreground">
+                  {passage.keyPhrase}
+                </p>
+              </div>
+              {learned.has(passage.id) && (
+                <CheckCircle2 className="size-5 shrink-0 text-green-600" aria-label="Learned" />
+              )}
+              <ChevronRight className="size-5 shrink-0 text-muted-foreground" aria-hidden />
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   )
 }
