@@ -4,7 +4,8 @@
 A prototype template: Vite + React + TypeScript + Tailwind CSS + shadcn/ui +
 React Router (`BrowserRouter`) + Supabase client. The user is not technical:
 explain things in simple language and handle the code and Git yourself.
-All code, comments, commit messages and UI text must be in English.
+All code, comments and commit messages must be in English. UI text (buttons, labels,
+messages) and the scripture content must be in Spanish: the app is for Spanish-speaking students.
 
 ## Security (most important)
 1. Every new table must be created with Row Level Security enabled and at least

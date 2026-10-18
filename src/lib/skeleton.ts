@@ -1,11 +1,11 @@
 export const STEP_COUNT = 5
 
 export const STEP_LABELS = [
-  'Read the full verse',
-  'Some letters hidden',
-  'Most letters hidden',
-  'First letters only',
-  'Reference only',
+  'Lee el versículo completo',
+  'Algunas letras ocultas',
+  'Casi todas las letras ocultas',
+  'Solo las primeras letras',
+  'Solo la referencia',
 ] as const
 
 // Share of each word's letters (after the first one) that is hidden at steps 1-4.

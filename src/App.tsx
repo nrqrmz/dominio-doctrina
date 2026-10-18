@@ -10,7 +10,7 @@ function Layout() {
       <header className="border-b">
         <div className="mx-auto flex h-14 max-w-2xl items-center px-4">
           <Link to="/" className="font-semibold">
-            Doctrinal Mastery
+            Dominio de la Doctrina
           </Link>
         </div>
       </header>

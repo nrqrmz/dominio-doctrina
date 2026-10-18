@@ -39,12 +39,12 @@ export default function PracticePage() {
         to="/"
         className="mb-4 inline-flex min-h-10 items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
       >
-        <ArrowLeft className="size-4" /> All passages
+        <ArrowLeft className="size-4" /> Todos los pasajes
       </Link>
 
       <div className="space-y-2">
         <p className="text-sm font-medium text-muted-foreground">
-          Step {step} of {STEP_COUNT} · {STEP_LABELS[step - 1]}
+          Paso {step} de {STEP_COUNT} · {STEP_LABELS[step - 1]}
         </p>
         <div className="flex gap-1.5">
           {STEP_LABELS.map((label, index) => (
@@ -52,7 +52,7 @@ export default function PracticePage() {
               key={label}
               type="button"
               onClick={() => goTo(index + 1)}
-              aria-label={`Go to step ${index + 1}: ${label}`}
+              aria-label={`Ir al paso ${index + 1}: ${label}`}
               aria-current={index + 1 === step}
               className="flex h-6 flex-1 items-center outline-none"
             >
@@ -99,28 +99,28 @@ export default function PracticePage() {
         <div className="mx-auto flex max-w-2xl gap-2 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
           <Button
             variant="outline"
-            className="h-12 flex-1 text-base"
+            className="h-12 min-w-0 flex-1 px-2 text-sm sm:px-4 sm:text-base"
             disabled={step === 1}
             onClick={() => goTo(step - 1)}
           >
-            <ChevronLeft /> Back
+            <ChevronLeft /> Atrás
           </Button>
           {step > 1 && (
             <Button
               variant="secondary"
-              className="h-12 flex-1 text-base"
+              className="h-12 min-w-0 flex-1 px-2 text-sm sm:px-4 sm:text-base"
               onClick={() => setPeek((value) => !value)}
             >
-              {peek ? <EyeOff /> : <Eye />} {peek ? 'Hide' : 'Check'}
+              {peek ? <EyeOff /> : <Eye />} {peek ? 'Ocultar' : 'Revisar'}
             </Button>
           )}
           {isLast ? (
-            <Button className="h-12 flex-1 text-base" onClick={finish}>
-              <Check /> I know it
+            <Button className="h-12 min-w-0 flex-1 px-2 text-sm sm:px-4 sm:text-base" onClick={finish}>
+              <Check /> Lo sé
             </Button>
           ) : (
-            <Button className="h-12 flex-1 text-base" onClick={() => goTo(step + 1)}>
-              Next <ChevronRight />
+            <Button className="h-12 min-w-0 flex-1 px-2 text-sm sm:px-4 sm:text-base" onClick={() => goTo(step + 1)}>
+              Siguiente <ChevronRight />
             </Button>
           )}
         </div>

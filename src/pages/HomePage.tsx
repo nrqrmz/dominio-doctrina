@@ -11,9 +11,9 @@ export default function HomePage() {
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Old Testament</h1>
+        <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Antiguo Testamento</h1>
         <p className="text-muted-foreground">
-          Pick a passage to practice. {learned.size} of {passages.length} learned.
+          Elige un pasaje para practicar. {learned.size} de {passages.length} aprendidos.
         </p>
       </div>
 
@@ -31,7 +31,7 @@ export default function HomePage() {
                 </p>
               </div>
               {learned.has(passage.id) && (
-                <CheckCircle2 className="size-5 shrink-0 text-green-600" aria-label="Learned" />
+                <CheckCircle2 className="size-5 shrink-0 text-green-600" aria-label="Aprendido" />
               )}
               <ChevronRight className="size-5 shrink-0 text-muted-foreground" aria-hidden />
             </Link>
