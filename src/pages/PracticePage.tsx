@@ -99,24 +99,39 @@ export default function PracticePage() {
             peek && '[transform:rotateY(180deg)]',
           )}
         >
-          <div aria-hidden={peek} inert={peek} className={cn(FACE, isLast && 'items-center justify-center text-center')}>
-            <h1
-              className={cn(
-                'font-bold tracking-tight text-primary',
-                isLast ? 'text-4xl md:text-5xl' : 'text-2xl md:text-3xl',
-              )}
-            >
-              {passage.reference}
-            </h1>
-            {!isLast && (
-              <Verses
-                // The key restarts the fade-in every time the visible text changes.
-                key={step}
-                passage={passage}
-                step={step}
-                className={cn('animate-in fade-in duration-300', step > 1 && step < 4 && 'tracking-wider')}
-              />
-            )}
+          <div aria-hidden={peek} inert={peek} className={FACE}>
+            {/* Both layers share the same cell, so the card keeps its height while they cross-fade. */}
+            <div className="grid flex-1">
+              <div
+                aria-hidden={isLast}
+                className={cn(
+                  'col-start-1 row-start-1 flex flex-col gap-4 transition-opacity duration-500',
+                  isLast && 'opacity-0',
+                )}
+              >
+                <h1 className="text-2xl font-bold tracking-tight text-primary md:text-3xl">
+                  {passage.reference}
+                </h1>
+                <Verses
+                  // The key restarts the fade-in every time the visible text changes.
+                  key={Math.min(step, 4)}
+                  passage={passage}
+                  step={Math.min(step, 4)}
+                  className={cn('animate-in fade-in duration-300', step > 1 && step < 4 && 'tracking-wider')}
+                />
+              </div>
+              <div
+                aria-hidden={!isLast}
+                className={cn(
+                  'col-start-1 row-start-1 flex items-center justify-center text-center transition-opacity duration-500',
+                  !isLast && 'opacity-0',
+                )}
+              >
+                <h1 className="text-4xl font-bold tracking-tight text-primary md:text-5xl">
+                  {passage.reference}
+                </h1>
+              </div>
+            </div>
           </div>
           <div aria-hidden={!peek} inert={!peek} className={cn(FACE, '[transform:rotateY(180deg)]')}>
             <p className="text-2xl font-bold tracking-tight text-primary md:text-3xl">{passage.reference}</p>
