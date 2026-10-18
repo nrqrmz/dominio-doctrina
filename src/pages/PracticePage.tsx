@@ -76,7 +76,7 @@ export default function PracticePage() {
 
       <h1
         className={cn(
-          'mt-6 font-bold tracking-tight',
+          'mt-6 font-bold tracking-tight text-primary',
           isLast && !peek ? 'py-16 text-center text-4xl md:text-5xl' : 'text-2xl md:text-3xl',
         )}
       >
@@ -93,7 +93,7 @@ export default function PracticePage() {
         >
           {passage.verses.map((verse) => (
             <p key={verse.n}>
-              <sup className="mr-1.5 font-sans text-sm font-semibold text-muted-foreground">
+              <sup className="mr-1.5 font-sans text-sm font-semibold text-gold">
                 {verse.n}
               </sup>
               {maskText(verse.text, maskStep, `${passage.id}:${verse.n}`)}

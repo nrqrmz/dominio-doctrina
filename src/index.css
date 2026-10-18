@@ -5,24 +5,27 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  /* Palette: light sky blue with soft gold. Text colors keep at least 4.5:1 contrast. */
+  --background: #F4F8FC;
+  --foreground: #1B2A3B;
+  --card: #FFFFFF;
+  --card-foreground: #1B2A3B;
+  --popover: #FFFFFF;
+  --popover-foreground: #1B2A3B;
+  --primary: #2B5C8A;
+  --primary-foreground: #FFFFFF;
+  --secondary: #E1EDF7;
+  --secondary-foreground: #1F4A73;
+  --muted: #E9F0F7;
+  --muted-foreground: #526379;
+  --accent: #F7EDD0;
+  --accent-foreground: #1F4A73;
+  --destructive: #B3392F;
+  --border: #D6E3EE;
+  --input: #D6E3EE;
+  --ring: #2B5C8A;
+  --success: #2E7D5B;
+  --gold: #8F6A0F;
 }
 
 .dark {
@@ -66,6 +69,8 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-gold: var(--gold);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
