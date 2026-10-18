@@ -50,7 +50,7 @@ export default function PracticePage() {
       </Link>
 
       <div className="space-y-2">
-        <p className="text-sm font-medium text-muted-foreground">
+        <p key={step} className="animate-in fade-in text-sm font-medium text-muted-foreground duration-200">
           Paso {step} de {STEP_COUNT} · {STEP_LABELS[step - 1]}
         </p>
         <div className="flex gap-1.5">
@@ -85,9 +85,11 @@ export default function PracticePage() {
 
       {showVerses && (
         <div
+          // The key restarts the fade-in every time the visible text changes.
+          key={maskStep}
           lang="es"
           className={cn(
-            'mt-4 space-y-4 font-serif text-xl leading-9 md:text-2xl md:leading-10',
+            'animate-in fade-in duration-300 mt-4 space-y-4 font-serif text-xl leading-9 md:text-2xl md:leading-10',
             maskStep > 1 && maskStep < 4 && 'tracking-wider',
           )}
         >
