@@ -1,4 +1,4 @@
-import { Link, Outlet, Route, Routes } from 'react-router-dom'
+import { Link, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { CheckCircle2 } from 'lucide-react'
 
 import FontSizeControls from '@/components/font-size-controls'
@@ -11,6 +11,7 @@ import PracticePage from '@/pages/PracticePage'
 
 function Layout() {
   const learned = useLearned()
+  const { pathname } = useLocation()
 
   return (
     <div className="min-h-screen">
@@ -35,7 +36,10 @@ function Layout() {
         </div>
       </header>
       <main className="mx-auto max-w-2xl px-4 py-6">
-        <Outlet />
+        {/* The key restarts the fade-in on every page change (not on search or state changes). */}
+        <div key={pathname} className="animate-in fade-in duration-200">
+          <Outlet />
+        </div>
       </main>
     </div>
   )
