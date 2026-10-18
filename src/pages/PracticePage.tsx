@@ -55,7 +55,8 @@ export default function PracticePage() {
 
   const finish = () => {
     setLearned(passage.id, true)
-    navigate('/')
+    // Tells the menu which passage was just learned, so it can celebrate it quietly.
+    navigate('/', { state: { learnedId: passage.id } })
   }
 
   return (

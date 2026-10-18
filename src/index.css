@@ -103,3 +103,19 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* A soft golden glow that fades out on the passage that was just learned. */
+@keyframes soft-highlight {
+  from {
+    background-color: color-mix(in srgb, var(--gold) 22%, var(--card));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 55%, transparent);
+  }
+  to {
+    background-color: var(--card);
+    box-shadow: 0 0 0 3px transparent;
+  }
+}
+
+.animate-soft-highlight {
+  animation: soft-highlight 2.2s ease-out 0.2s both;
+}
