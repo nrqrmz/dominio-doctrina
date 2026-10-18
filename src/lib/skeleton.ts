@@ -26,30 +26,28 @@ function hash(seed: string): number {
 
 const isLetter = (ch: string) => /\p{L}/u.test(ch)
 
-// Every word keeps its first letter and its punctuation. Hidden letters become "_",
-// except at step 4, where they are removed and only the first letters remain.
-export function maskText(text: string, step: number, seed: string): string {
-  const share = HIDDEN_SHARE[step - 1] ?? 1
-  if (share === 0) return text
+export type MaskedChar = {
+  char: string
+  // First letters and punctuation never change, so they are plain text.
+  fixed: boolean
+  // "blank" is drawn as a short line (steps 2-3); "gone" is removed (step 4).
+  state: 'shown' | 'blank' | 'gone'
+}
 
-  return text
-    .split(' ')
-    .map((word, wordIndex) => {
-      let letterIndex = -1
-      let masked = ''
-      for (const ch of Array.from(word)) {
-        if (!isLetter(ch)) {
-          masked += ch
-          continue
-        }
-        letterIndex++
-        if (letterIndex === 0) {
-          masked += ch
-        } else if (share < 1) {
-          masked += hash(`${seed}:${wordIndex}:${letterIndex}`) < share ? '_' : ch
-        }
-      }
-      return masked
+// Describes every character of the text for the given step. Every word keeps its first
+// letter and its punctuation. A letter hidden at one step stays hidden in the next ones.
+export function maskWords(text: string, step: number, seed: string): MaskedChar[][] {
+  const share = HIDDEN_SHARE[step - 1] ?? 1
+
+  return text.split(' ').map((word, wordIndex) => {
+    let letterIndex = -1
+    return Array.from(word).map((char): MaskedChar => {
+      if (!isLetter(char)) return { char, fixed: true, state: 'shown' }
+      letterIndex++
+      if (letterIndex === 0) return { char, fixed: true, state: 'shown' }
+      const hidden = share === 1 || hash(`${seed}:${wordIndex}:${letterIndex}`) < share
+      if (!hidden) return { char, fixed: false, state: 'shown' }
+      return { char, fixed: false, state: step >= 4 ? 'gone' : 'blank' }
     })
-    .join(' ')
+  })
 }

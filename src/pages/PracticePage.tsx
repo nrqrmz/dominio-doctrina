@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, ChevronLeft, ChevronRight, Check, Eye, EyeOff } from 'lucide-react'
 
+import MaskedText from '@/components/masked-text'
 import { Button } from '@/components/ui/button'
 import { passages, type Passage } from '@/data/passages'
 import { setLearned } from '@/lib/progress'
-import { maskText, STEP_COUNT, STEP_LABELS } from '@/lib/skeleton'
+import { STEP_COUNT, STEP_LABELS } from '@/lib/skeleton'
 import { cn } from '@/lib/utils'
 import NotFoundPage from '@/pages/NotFoundPage'
 
@@ -21,18 +22,44 @@ const ARROW_ICON = 'hidden size-[16px] min-[360px]:block'
 const FACE =
   'col-start-1 row-start-1 flex min-h-48 flex-col gap-4 rounded-2xl border bg-card p-5 [backface-visibility:hidden] [-webkit-backface-visibility:hidden]'
 
-function Verses({ passage, step, className }: { passage: Passage; step: number; className?: string }) {
+const VERSE_CLASS = 'space-y-4 font-serif text-xl leading-9 md:text-2xl md:leading-10'
+
+function VerseNumber({ n }: { n: number }) {
+  return <sup className="mr-1.5 font-sans text-sm font-semibold text-gold">{n}</sup>
+}
+
+// The back of the card is plain text, so it can be selected and read by screen readers.
+function FullVerses({ passage }: { passage: Passage }) {
   return (
-    <div
-      lang="es"
-      className={cn('font-serif text-xl leading-9 md:text-2xl md:leading-10 space-y-4', className)}
-    >
+    <div lang="es" className={VERSE_CLASS}>
       {passage.verses.map((verse) => (
         <p key={verse.n}>
-          <sup className="mr-1.5 font-sans text-sm font-semibold text-gold">{verse.n}</sup>
-          {maskText(verse.text, step, `${passage.id}:${verse.n}`)}
+          <VerseNumber n={verse.n} />
+          {verse.text}
         </p>
       ))}
+    </div>
+  )
+}
+
+// The front is drawn letter by letter so the letters can dissolve between steps. Hidden
+// letters are not in the page text, and screen readers get a plain description instead.
+function MaskedVerses({ passage, step }: { passage: Passage; step: number }) {
+  return (
+    <div lang="es">
+      <p className="sr-only">
+        {step === 1
+          ? passage.verses.map((verse) => `${verse.n} ${verse.text}`).join(' ')
+          : 'Versículo con letras ocultas. Usa Revisar para ver el versículo completo.'}
+      </p>
+      <div aria-hidden className={VERSE_CLASS}>
+        {passage.verses.map((verse) => (
+          <p key={verse.n}>
+            <VerseNumber n={verse.n} />
+            <MaskedText text={verse.text} step={step} seed={`${passage.id}:${verse.n}`} />
+          </p>
+        ))}
+      </div>
     </div>
   )
 }
@@ -116,13 +143,8 @@ export default function PracticePage() {
                 <h1 className="text-2xl font-bold tracking-tight text-primary md:text-3xl">
                   {passage.reference}
                 </h1>
-                <Verses
-                  // The key restarts the fade-in every time the visible text changes.
-                  key={Math.min(step, 4)}
-                  passage={passage}
-                  step={Math.min(step, 4)}
-                  className={cn('animate-in fade-in duration-300', step > 1 && step < 4 && 'tracking-wider')}
-                />
+                {/* Step 5 keeps the step 4 text while the layer fades out. */}
+                <MaskedVerses passage={passage} step={Math.min(step, 4)} />
               </div>
               <div
                 aria-hidden={!isLast}
@@ -139,7 +161,7 @@ export default function PracticePage() {
           </div>
           <div aria-hidden={!peek} inert={!peek} className={cn(FACE, '[transform:rotateY(180deg)]')}>
             <p className="text-2xl font-bold tracking-tight text-primary md:text-3xl">{passage.reference}</p>
-            <Verses passage={passage} step={1} />
+            <FullVerses passage={passage} />
           </div>
         </div>
       </div>
