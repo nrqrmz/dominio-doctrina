@@ -37,8 +37,9 @@ messages) and the scripture content must be in Spanish: the app is for Spanish-s
 
 ## Git workflow
 - The main branch is `master`. The preview updates only when changes reach `master`.
-- If you work on another branch, merge it into `master` (or open a pull request)
-  when the user wants to see the preview.
+- The user has authorized it: after every change, push it straight to `master` (direct
+  merge, no pull request) without asking again. If the work was done on another branch,
+  fast-forward `master` to it and push both.
 
 ## Structure and conventions
 - Routes are defined in `src/App.tsx`. Pages live in `src/pages/`.
