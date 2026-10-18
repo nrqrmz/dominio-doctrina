@@ -89,3 +89,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Respect the phone's "reduce motion" setting: no animations or transitions at all. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
