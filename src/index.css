@@ -31,25 +31,25 @@
 
 .dark {
   color-scheme: dark;
-  /* Night palette: warm charcoal with the same sky blue as the day theme, lightened. Text keeps at least 4.5:1 contrast. */
+  /* Night palette: warm charcoal with ivory as the accent (same color as the verse text), soft gold for small touches. Text keeps at least 4.5:1 contrast. */
   --background: #151311;
   --foreground: #EDE8DC;
   --card: #1F1D19;
   --card-foreground: #EDE8DC;
   --popover: #1F1D19;
   --popover-foreground: #EDE8DC;
-  --primary: #7DB3E8;
-  --primary-foreground: #0B1626;
+  --primary: #EDE8DC;
+  --primary-foreground: #151311;
   --secondary: #2B2823;
   --secondary-foreground: #E8E2D2;
   --muted: #24221E;
   --muted-foreground: #A9A395;
-  --accent: #2A2F38;
-  --accent-foreground: #DCE9F7;
+  --accent: #2E2B25;
+  --accent-foreground: #EDE8DC;
   --destructive: #C23B30;
   --border: #38342C;
   --input: #403B32;
-  --ring: #7DB3E8;
+  --ring: #EDE8DC;
   --success: #6CC49A;
   --gold: #C9AA5C;
 }
