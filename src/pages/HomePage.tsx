@@ -14,15 +14,14 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { passages } from '@/data/passages'
-import { clearLearned, getLearned } from '@/lib/progress'
+import { clearLearned, useLearned } from '@/lib/progress'
 
 export default function HomePage() {
-  const [learned, setLearnedIds] = useState(getLearned)
+  const learned = useLearned()
   const [confirmOpen, setConfirmOpen] = useState(false)
 
   const resetProgress = () => {
     clearLearned()
-    setLearnedIds(new Set())
     setConfirmOpen(false)
   }
 
