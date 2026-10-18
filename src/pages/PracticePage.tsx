@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, ChevronLeft, ChevronRight, Check, Eye, EyeOff } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { passages } from '@/data/passages'
+import { passages, type Passage } from '@/data/passages'
 import { setLearned } from '@/lib/progress'
 import { maskText, STEP_COUNT, STEP_LABELS } from '@/lib/skeleton'
 import { cn } from '@/lib/utils'
@@ -15,6 +15,27 @@ const BAR_BUTTON =
   'h-[48px] min-w-0 flex-1 gap-[6px] px-[6px] text-[14px] sm:gap-[8px] sm:px-[16px] sm:text-[16px]'
 const ICON = 'size-[16px]'
 const ARROW_ICON = 'hidden size-[16px] min-[360px]:block'
+
+// The practice card has two faces: the front shows the verse for the current step and
+// the back shows the full verse. "Revisar" flips the card, like a flashcard.
+const FACE =
+  'col-start-1 row-start-1 flex min-h-48 flex-col gap-4 rounded-2xl border bg-card p-5 [backface-visibility:hidden] [-webkit-backface-visibility:hidden]'
+
+function Verses({ passage, step, className }: { passage: Passage; step: number; className?: string }) {
+  return (
+    <div
+      lang="es"
+      className={cn('font-serif text-xl leading-9 md:text-2xl md:leading-10 space-y-4', className)}
+    >
+      {passage.verses.map((verse) => (
+        <p key={verse.n}>
+          <sup className="mr-1.5 font-sans text-sm font-semibold text-gold">{verse.n}</sup>
+          {maskText(verse.text, step, `${passage.id}:${verse.n}`)}
+        </p>
+      ))}
+    </div>
+  )
+}
 
 export default function PracticePage() {
   const { id } = useParams()
@@ -31,9 +52,6 @@ export default function PracticePage() {
   }
 
   const isLast = step === STEP_COUNT
-  // The verse is hidden completely on the last step, unless the student peeks to check.
-  const showVerses = step < STEP_COUNT || peek
-  const maskStep = peek ? 1 : step
 
   const finish = () => {
     setLearned(passage.id, true)
@@ -74,35 +92,38 @@ export default function PracticePage() {
         </div>
       </div>
 
-      <h1
-        className={cn(
-          'mt-6 font-bold tracking-tight text-primary',
-          isLast && !peek ? 'py-16 text-center text-4xl md:text-5xl' : 'text-2xl md:text-3xl',
-        )}
-      >
-        {passage.reference}
-      </h1>
-
-      {showVerses && (
+      <div className="mt-6 [perspective:1200px]">
         <div
-          // The key restarts the fade-in every time the visible text changes.
-          key={maskStep}
-          lang="es"
           className={cn(
-            'animate-in fade-in duration-300 mt-4 space-y-4 font-serif text-xl leading-9 md:text-2xl md:leading-10',
-            maskStep > 1 && maskStep < 4 && 'tracking-wider',
+            'grid transition-transform duration-500 ease-in-out [transform-style:preserve-3d]',
+            peek && '[transform:rotateY(180deg)]',
           )}
         >
-          {passage.verses.map((verse) => (
-            <p key={verse.n}>
-              <sup className="mr-1.5 font-sans text-sm font-semibold text-gold">
-                {verse.n}
-              </sup>
-              {maskText(verse.text, maskStep, `${passage.id}:${verse.n}`)}
-            </p>
-          ))}
+          <div aria-hidden={peek} inert={peek} className={cn(FACE, isLast && 'items-center justify-center text-center')}>
+            <h1
+              className={cn(
+                'font-bold tracking-tight text-primary',
+                isLast ? 'text-4xl md:text-5xl' : 'text-2xl md:text-3xl',
+              )}
+            >
+              {passage.reference}
+            </h1>
+            {!isLast && (
+              <Verses
+                // The key restarts the fade-in every time the visible text changes.
+                key={step}
+                passage={passage}
+                step={step}
+                className={cn('animate-in fade-in duration-300', step > 1 && step < 4 && 'tracking-wider')}
+              />
+            )}
+          </div>
+          <div aria-hidden={!peek} inert={!peek} className={cn(FACE, '[transform:rotateY(180deg)]')}>
+            <p className="text-2xl font-bold tracking-tight text-primary md:text-3xl">{passage.reference}</p>
+            <Verses passage={passage} step={1} />
+          </div>
         </div>
-      )}
+      </div>
 
       <div className="fixed inset-x-0 bottom-0 z-10 border-t bg-background">
         <div className="mx-auto flex max-w-2xl gap-[8px] px-[16px] pt-[12px] pb-[max(12px,env(safe-area-inset-bottom))]">
