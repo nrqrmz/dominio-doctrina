@@ -96,10 +96,10 @@ export default function PracticePage() {
       )}
 
       <div className="fixed inset-x-0 bottom-0 z-10 border-t bg-background">
-        <div className="mx-auto flex max-w-2xl gap-2 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+        <div className="mx-auto flex max-w-2xl gap-2 px-4 pt-[12px] pb-[max(12px,env(safe-area-inset-bottom))]">
           <Button
             variant="outline"
-            className="h-12 min-w-0 flex-1 px-2 text-sm sm:px-4 sm:text-base"
+            className="h-[48px] min-w-0 flex-1 px-2 text-[14px] sm:px-4 sm:text-[16px]"
             disabled={step === 1}
             onClick={() => goTo(step - 1)}
           >
@@ -108,18 +108,18 @@ export default function PracticePage() {
           {step > 1 && (
             <Button
               variant="secondary"
-              className="h-12 min-w-0 flex-1 px-2 text-sm sm:px-4 sm:text-base"
+              className="h-[48px] min-w-0 flex-1 px-2 text-[14px] sm:px-4 sm:text-[16px]"
               onClick={() => setPeek((value) => !value)}
             >
               {peek ? <EyeOff /> : <Eye />} {peek ? 'Ocultar' : 'Revisar'}
             </Button>
           )}
           {isLast ? (
-            <Button className="h-12 min-w-0 flex-1 px-2 text-sm sm:px-4 sm:text-base" onClick={finish}>
+            <Button className="h-[48px] min-w-0 flex-1 px-2 text-[14px] sm:px-4 sm:text-[16px]" onClick={finish}>
               <Check /> Lo sé
             </Button>
           ) : (
-            <Button className="h-12 min-w-0 flex-1 px-2 text-sm sm:px-4 sm:text-base" onClick={() => goTo(step + 1)}>
+            <Button className="h-[48px] min-w-0 flex-1 px-2 text-[14px] sm:px-4 sm:text-[16px]" onClick={() => goTo(step + 1)}>
               Siguiente <ChevronRight />
             </Button>
           )}

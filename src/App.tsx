@@ -1,6 +1,7 @@
 import { Link, Outlet, Route, Routes } from 'react-router-dom'
 import { CheckCircle2 } from 'lucide-react'
 
+import FontSizeControls from '@/components/font-size-controls'
 import { passages } from '@/data/passages'
 import { useLearned } from '@/lib/progress'
 import HomePage from '@/pages/HomePage'
@@ -13,17 +14,22 @@ function Layout() {
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-20 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <div className="mx-auto flex h-14 max-w-2xl items-center justify-between gap-3 px-4">
-          <Link to="/" className="font-semibold">
-            Dominio de la Doctrina
+        {/* px sizes on purpose: the bar must not grow with the font size setting. */}
+        <div className="mx-auto flex h-[56px] max-w-2xl items-center justify-between gap-2 px-4">
+          <Link to="/" className="min-w-0 truncate text-[16px] font-semibold">
+            <span className="min-[380px]:hidden">Dominio</span>
+            <span className="hidden min-[380px]:inline">Dominio de la Doctrina</span>
           </Link>
-          <span
-            className="flex shrink-0 items-center gap-1.5 text-sm font-medium text-muted-foreground"
-            aria-label={`${learned.size} de ${passages.length} pasajes aprendidos`}
-          >
-            <CheckCircle2 className="size-4 text-green-600" aria-hidden />
-            {learned.size}/{passages.length}
-          </span>
+          <div className="flex shrink-0 items-center gap-1">
+            <FontSizeControls />
+            <span
+              className="flex items-center gap-1 text-[14px] font-medium text-muted-foreground"
+              aria-label={`${learned.size} de ${passages.length} pasajes aprendidos`}
+            >
+              <CheckCircle2 className="hidden size-[16px] text-green-600 sm:block" aria-hidden />
+              {learned.size}/{passages.length}
+            </span>
+          </div>
         </div>
       </header>
       <main className="mx-auto max-w-2xl px-4 py-6">
